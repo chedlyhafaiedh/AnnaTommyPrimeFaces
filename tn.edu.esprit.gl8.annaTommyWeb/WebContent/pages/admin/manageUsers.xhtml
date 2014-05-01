@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head></h:head>
+<h:body>
+	<h:form id="form">
+		<p:dataTable border="1" value="#{beanbean.players}" var="p">
+			<p:column id="column1">
+				<f:facet name="header">
+					<h:outputText value="Name Player"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{p.name}" />
+			</p:column>
+			<p:column id="column2">
+				<f:facet name="header">
+					<h:outputText value="Token"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{p.token}" />
+			</p:column>
+			<p:column id="column3">
+				<f:facet name="header">
+					<h:outputText value="#"></h:outputText>
+				</f:facet>
+
+				<p:commandButton value="update" update=":dialog"
+					oncomplete="popup.show()">
+					<f:setPropertyActionListener target="#{beanbean.player}"
+						value="#{p}"></f:setPropertyActionListener>
+				</p:commandButton>
+
+				<p:commandButton value="delete" update="@form"
+					action="#{beanbean.doDeleteUser()}">
+					<f:setPropertyActionListener target="#{beanbean.player}"
+						value="#{p}"></f:setPropertyActionListener>
+				</p:commandButton>
+
+			</p:column>
+		</p:dataTable>
+		<p:commandButton
+			value="2 Add Player Please keep calm and push the button thank you"
+			update=":dialog" oncomplete="popup.show()" />
+
+
+
+	</h:form>
+	<p:dialog widgetVar="popup" modal="true" header="creat new user">
+
+		<h:form id="dialog">
+
+
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Name" for="name" id="lname" />
+				<p:inputText value="#{beanbean.player.name}" id="name"
+					requiredMessage="champ obligatoir" required="true">
+					<p:ajax event="blur" update="@this mname lname "></p:ajax>
+				</p:inputText>
+				<p:message for="name" id="mname"></p:message>
+				<p:outputLabel value="Login" for="login" />
+				<p:inputText value="#{beanbean.player.login}" id="login"
+					required="true" />
+				<p:message for="login"></p:message>
+				<p:outputLabel value="Password" for="pwd" />
+				<p:password value="#{beanbean.player.password}" id="pwd"
+					validatorMessage="minimum 5 maximum 8" required="true">
+					<f:validateLength minimum="5" maximum="8"></f:validateLength>
+				</p:password>
+				<p:message for="pwd"></p:message>
+				<p:outputLabel value="Token" for="token" />
+				<p:inputText value="#{beanbean.player.token}" id="token"
+					required="true">
+					<f:validateDoubleRange minimum="20" maximum="30">
+
+					</f:validateDoubleRange>
+				</p:inputText>
+				<p:message for="token"></p:message>
+				<p:commandButton action="#{beanbean.doAddUser()}" value="validate"
+					update="@form :form" />
+
+
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

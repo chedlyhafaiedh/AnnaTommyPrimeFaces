@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>login page</title>
+</h:head>
+<h:body>
+	<h1>please insert your credentials ...</h1>
+	
+	<h:form>
+
+
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Login" for="login" id="llogin" />
+				<p:inputText value="#{beanbean.user.login}" id="login"
+					requiredMessage="champ obligatoir" required="true">
+					<p:ajax event="blur" update="@this mname llogin "></p:ajax>
+				</p:inputText>
+				<p:message for="login" id="mname"></p:message>
+				
+				<p:outputLabel value="Password" for="pwd" />
+				<p:password value="#{beanbean.user.password}" id="pwd"
+					validatorMessage="minimum 5 maximum 8" required="true">
+					<f:validateLength minimum="5" maximum="8"></f:validateLength>
+				</p:password>
+				<p:message for="pwd"></p:message>
+				
+				
+				<p:commandButton action="#{beanbean.doLogin()}" value="Connect"/>
+
+
+			</h:panelGrid>
+		</h:form>
+	
+	
+</h:body>
+</html>
